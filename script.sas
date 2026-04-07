@@ -1,6 +1,5 @@
 /*==============================================================
-  SAS Translation of CARBayesST R Code
-  Original: Asthma/COPD Inpatient Exacerbation Analysis
+  File Name: Asthma/COPD Inpatient Exacerbation Analysis
   Author: Translated for Sarah L. Kuril
 ==============================================================*/
 
@@ -54,8 +53,7 @@ RUN;
 
 /*------------------------------------------------------------
   MACRO 2: COMPUTE MORAN'S I (spatial autocorrelation check)
-  SAS does not have a native Moran's I proc; this macro
-  calls PROC IML to compute it from residuals + weights matrix
+  This macro calls PROC IML to compute it from residuals + weights matrix
 ------------------------------------------------------------*/
 %MACRO morans_i(resid_data=, resid_var=, weights_csv=);
 
@@ -155,6 +153,7 @@ RUN;
     /* PROC MCMC: Bayesian Poisson with CAR spatial random effects */
     /* This is a simplified analog — full ST.CARar requires      */
     /* space-time random effects implemented via PROC IML        */
+    /* For full spatiotemporal CAR models, will code in R for the CARBayesST step and use SAS for pre/post-processing.*/
     PROC MCMC DATA=&data
         NBI=&burnin
         NMC=&nsamples
@@ -212,15 +211,3 @@ PROC EXPORT DATA=chain1_quants
     DBMS=CSV REPLACE;
 RUN;
 
-
-/*==============================================================
-  END OF PROGRAM
-  Notes:
-  - CARBayesST (ST.CARar) has no direct SAS proc equivalent.
-    PROC MCMC is the closest Bayesian analog.
-  - For full spatiotemporal CAR models, consider keeping R for
-    the CARBayesST step and using SAS for pre/post-processing.
-  - Macros here (run_poisson, morans_i, rr_summary, car_spatial)
-    demonstrate reusable, parameterized SAS macro programming
-    directly applicable to resume and interview claims.
-==============================================================*/
