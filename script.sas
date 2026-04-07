@@ -1,6 +1,6 @@
 /*==============================================================
   File Name: Asthma/COPD Inpatient Exacerbation Analysis
-  Author: Translated for Sarah L. Kuril
+  Author: Sarah L. Kuril
 ==============================================================*/
 
 
